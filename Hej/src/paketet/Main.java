@@ -7,7 +7,6 @@ import org.lwjgl.*;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		try {
 			Display.setDisplayMode(new DisplayMode(640, 480));
 			Display.setTitle("Hello, LWJGL!");
