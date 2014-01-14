@@ -35,8 +35,7 @@ public class Rectangle {
     /**
      * Checks whether or not an other Rectangle is inside
      * 
-     * @param pos
-     * @param size
+     * @param r
      * @return if inside; how far from center edge is,  
      *          else null
      */
@@ -48,16 +47,18 @@ public class Rectangle {
         double edgeE = r.pos.getX() + r.size.getX()/2;
         double edgeS = r.pos.getY() + r.size.getY()/2;
         
-        Vector v = new Vector(0,0);
+        Vector dif = new Vector(this.pos.getX() - r.pos.getX(), this.pos.getY() - r.pos.getX());
         
-        v.setX(this.pos.getX() - edgeW);
-        v.setY(this.pos.getX() - edgeW);
-        
-        
-        if(this.pos.getX() < edgeW) {  //r is on
-            
-        } else if(this.pos.getX() < edgeE) {
-            
+        if(dif.getX() < size.getX() + r.size.getX() && 
+                dif.getX() > - size.getX() - r.size.getX() &&
+                dif.getY() < size.getY() + r.size.getY() && 
+                dif.getY() > - size.getY() - r.size.getY() ) {
+            //INSIDE - Initialize collision
+//            if(dif.getX() < size.getX() + r.size.getX() && {
+//           
+//          }
+            System.out.println("Collision!");
+
         }
         
         
