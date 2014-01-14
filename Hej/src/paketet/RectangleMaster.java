@@ -18,11 +18,9 @@ public class RectangleMaster {
 	}
 	
 	public void iterate() {
-		int i, j;
-		for (i = 0; i < rectangleList.size(); i += 1) {
-			for (j = 0; j < rectangleList.size(); j += 1) {
-				Rectangle r1 = rectangleList.get(i);
-				Rectangle r2 = rectangleList.get(j);
+
+	    for (Rectangle r1: rectangleList) {
+		    for (Rectangle r2: rectangleList) {
 				Vector v = r1.inBounds(r2);
 				if (v != null) {
 					r1.pos.setX(r1.pos.getX() + v.getX());
