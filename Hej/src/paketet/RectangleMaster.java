@@ -1,5 +1,6 @@
 package paketet;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,16 +8,16 @@ public class RectangleMaster {
 	
 	private List<Rectangle> rectangleList = null;
 	
-	public RectangleMaster(Vector pos, Vector vel, Vector acc, Vector scale) {
+	public RectangleMaster(Vector pos, Vector vel, Vector acc, Vector size) {
 		rectangleList = new ArrayList<Rectangle>();
-		rectangleList.add(new Rectangle(pos, vel, acc, scale));
+		rectangleList.add(new Rectangle(pos, vel, acc, size));
 	}
 	
-	public addRectangle(Vector pos, Vector vel, Vector acc, Vector scale) {
-		rectangleList.add(new Rectangle(pos, vel, acc, scale));
+	public void addRectangle(Vector pos, Vector vel, Vector acc, Vector size) {
+		rectangleList.add(new Rectangle(pos, vel, acc, size));
 	}
 	
-	public iterate() {
+	public void iterate() {
 		int i, j;
 		for (i = 0; i < rectangleList.size(); i += 1) {
 			for (j = 0; j < rectangleList.size(); j += 1) {
@@ -30,6 +31,13 @@ public class RectangleMaster {
 					r1.vel.setY(-r1.vel.getY());
 				}
 			}
+		}
+	}
+	
+	public void update() {
+		for (Rectangle r : rectangleList) {
+			r.move();
+			r.drawMe(new Color(0,0,1));
 		}
 	}
 }

@@ -28,7 +28,14 @@ public class Main {
 		glOrtho(0, screenSizeX, screenSizeY, 0, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
 		
-		Rectangle r = new Rectangle(new Vector(20, 20));
+		//Rectangle r = new Rectangle(new Vector(20, 20));
+		RectangleMaster rectangleList  = new RectangleMaster(new Vector(20, 20), new Vector(5, 5), new Vector(0, 0), new Vector(50, 50));
+		rectangleList.addRectangle(new Vector(120, 120), new Vector(-2, 2), new Vector(0, 0), new Vector(20, 20));
+		rectangleList.addRectangle(new Vector(120, 120), new Vector(2, -2), new Vector(0, 0), new Vector(20, 20));
+		rectangleList.addRectangle(new Vector(120, 120), new Vector(1, -3), new Vector(0, 0), new Vector(20, 20));
+		rectangleList.addRectangle(new Vector(120, 120), new Vector(3, -1), new Vector(0, 0), new Vector(20, 20));
+		
+		
 		
 		while(!Display.isCloseRequested()) {
 			// Render
@@ -36,8 +43,8 @@ public class Main {
 			mX = Mouse.getX();
 			mY = screenSizeY - Mouse.getY() - 1;
 
-			r.move();
-			r.drawMe(new Color(0,0,1));
+			rectangleList.update();
+			
 			
 			Display.update();
 			Display.sync(60);
