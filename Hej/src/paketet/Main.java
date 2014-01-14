@@ -28,7 +28,7 @@ public class Main {
 		glOrtho(0, screenSizeX, screenSizeY, 0, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
 		
-		Rectangle r = new Rectangle(new Vector(500, 500));
+		Rectangle r = new Rectangle(new Vector(20, 20));
 		
 		while(!Display.isCloseRequested()) {
 			// Render
