@@ -4,10 +4,11 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Color;
 
+import org.lwjgl.input.Keyboard;
+
 public class Rectangle {
     
     public Vector pos, vel, acc, size;
-    public static final int NO_COLLISION = 0, EAST = 1, UP = 2, WEST = 3, DOWN = 4;
 
     public Rectangle(Vector pos, Vector vel, Vector acc, Vector size) {
         this.pos = pos;
@@ -36,7 +37,7 @@ public class Rectangle {
      * Checks whether or not an other Rectangle is inside
      * 
      * @param r
-     * @return if inside; how far from center edge is,  
+     * @return if inside; how far from center the edge is,  
      *          else null
      */
     public Vector inBounds(Rectangle r) {
@@ -47,20 +48,41 @@ public class Rectangle {
         double edgeE = r.pos.getX() + r.size.getX()/2;
         double edgeS = r.pos.getY() + r.size.getY()/2;
         
-        Vector dif = new Vector(this.pos.getX() - r.pos.getX(), this.pos.getY() - r.pos.getX());
+        Vector dif = new Vector(this.pos.getX() - r.pos.getX(), this.pos.getY() - r.pos.getY());
+        Vector totalSize = new Vector(size.getX() + r.size.getX(), size.getY() + r.size.getY());
         
-        if(dif.getX() < size.getX() + r.size.getX() && 
-                dif.getX() > - size.getX() - r.size.getX() &&
-                dif.getY() < size.getY() + r.size.getY() && 
-                dif.getY() > - size.getY() - r.size.getY() ) {
-            //INSIDE - Initialize collision
-//            if(dif.getX() < size.getX() + r.size.getX() && {
-//           
-//          }
-            System.out.println("Collision!");
+        Vector returner = new Vector(0,0);
+        
 
-        }
         
+        
+        if(dif.getX() < totalSize.getX()/2 && 
+                dif.getX() > - totalSize.getX()/2 &&
+                dif.getY() < totalSize.getY()/2 && 
+                dif.getY() > - totalSize.getY()/2 ) {
+//              INSIDE - Initialize collision
+                // Is E edge inside box?
+            System.out.println("Collision!" + vel.getX());
+                if( dif.getX() > 0) {
+                    System.out.println("1");
+                    returner.setX((dif.getX() - r. size.getX()/2));
+                } 
+                else if( dif.getX() < 0) {
+                    System.out.println("2");
+                    returner.setX(dif.getX() + r.size.getX()/2);
+                } 
+                if( dif.getY() > 0) {
+                    
+                    System.out.println("3");
+                    returner.setY((dif.getY() - r.size.getY()/2));
+                } 
+                else if( dif.getY() < 0) {
+                    System.out.println("4");
+                    returner.setX(dif.getY() + r.size.getY()/2);
+                } 
+                return returner;
+        }
+        //TODO Kommer krocka två gånger
         
         return null;
     }
