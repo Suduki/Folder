@@ -11,7 +11,7 @@ import org.lwjgl.*;
 
 public class Main {
 
-	public static int mX, mY;
+	public static Vector mouseCoords;
 	public static int screenSizeX = 500, screenSizeY = 500;
 	
 	
@@ -23,6 +23,8 @@ public class Main {
 		} catch (LWJGLException e) {
 		    e.printStackTrace();
 		}
+		
+		mouseCoords = new Vector(0,0);
 		
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -36,40 +38,48 @@ public class Main {
 		glMatrixMode(GL_MODELVIEW);
 		
 		//Rectangle r = new Rectangle(new Vector(20, 20));
-		double g = -0.01;
-		RectangleMaster rectangleList  = new RectangleMaster(new Vector(250, 250), new Vector(0, 0), new Vector(0,g), new Vector(50, 20));
-		rectangleList.addRectangle(new Vector(80, 80), new Vector(1, 1), new Vector(0, -g), new Vector(20, 20), 10, 2);
-		rectangleList.addRectangle(new Vector(50, 808), new Vector(0.2, 0.2), new Vector(0, -g), new Vector(20, 20), 0, 5);
-		rectangleList.addRectangle(new Vector(350, 250), new Vector(0.1, -0.3), new Vector(0, -g), new Vector(20, 20), 20, 5);
-		rectangleList.addRectangle(new Vector(200, 250), new Vector(0.3, -0.1), new Vector(0, -g), new Vector(20, 20));
-		rectangleList.addRectangle(new Vector(10, 88), new Vector(0.3, 0.09), new Vector(0, -g), new Vector(20, 20));
-        rectangleList.addRectangle(new Vector(50, 60), new Vector(0.2, 0.2), new Vector(0, -g), new Vector(20, 20));
-        rectangleList.addRectangle(new Vector(350, 250), new Vector(0.1, -0.3), new Vector(0, 0), new Vector(20, 20));
-        rectangleList.addRectangle(new Vector(100, 250), new Vector(0.3, -0.1), new Vector(0, -g), new Vector(20, 20));
+		double ay = 0.00001, ax = 0.000001;
+		double sizeFactor = 3;
+		RectangleMaster rectangleMaster  = new RectangleMaster(new Vector(250, 250), new Vector(0, 0), new Vector(ax,ay), new Vector(5*sizeFactor, 2*sizeFactor));
+		rectangleMaster.addRectangle(new Vector(80, 80), new Vector(0, 0), new Vector(ax, -ay), new Vector(15*sizeFactor, 2*sizeFactor), 10, 2);
+		rectangleMaster.addRectangle(new Vector(50, 408), new Vector(0, 0), new Vector(-ax, -ay), new Vector(2*sizeFactor, 2*sizeFactor), 0, 5);
+		rectangleMaster.addRectangle(new Vector(353, 250), new Vector(0, 0), new Vector(ax, -ay), new Vector(2*sizeFactor, 2*sizeFactor), 20, 5);
+		rectangleMaster.addRectangle(new Vector(83, 80), new Vector(0, 0), new Vector(ax, -ay), new Vector(2*sizeFactor, 2*sizeFactor), 10, 2);
+		rectangleMaster.addRectangle(new Vector(56, 408), new Vector(0, 0), new Vector(-ax, -ay), new Vector(2*sizeFactor, 2*sizeFactor), 0, 5);
+		rectangleMaster.addRectangle(new Vector(356, 250), new Vector(0, 0), new Vector(ax, -ay), new Vector(40*sizeFactor, 2*sizeFactor), 20, 5);
+//		rectangleMaster.run();
+		Thread a = (new Thread(rectangleMaster));
+		a.start();
 //        
 		
 		//TODO Maybe update physics more often than 60Hz?
         //TODO Why are they spinning inside the frame?
 		
 		while(!Display.isCloseRequested()) {
-	        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
-	            try {
-	                Thread.sleep(100);
-	            } catch (InterruptedException e) {
-	                e.printStackTrace();
-	            }
-	        }  
+		   
 			// Render
 			glClear(GL_COLOR_BUFFER_BIT);
-			mX = Mouse.getX();
-			mY = screenSizeY - Mouse.getY() - 1;
+			
+			mouseCoords.setX(Mouse.getX());
+			mouseCoords.setY(screenSizeY - Mouse.getY() - 1);
 
-			rectangleList.update();
-			rectangleList.iterate();
+			
+			rectangleMaster.draw();
+//			rectangleList.iterate();
 			
 			Display.update();
 			Display.sync(60);
 		}
+		rectangleMaster.stop();
+		while(a.isAlive()) { //Wait for thread to die
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } 
+		}
 		Display.destroy();
+        
 	}
 }

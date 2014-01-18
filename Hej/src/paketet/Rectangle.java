@@ -11,7 +11,7 @@ import org.newdawn.slick.Color;
 public class Rectangle {
 
     public Vector pos, vel, acc, size;
-    public double alpha, alphar, omega; 
+    public double alpha, alphar, omega; //alphar is in radians
     private Color color;
     private Vector pNW, pNE, pSE, pSW;
 
@@ -20,6 +20,7 @@ public class Rectangle {
         this.vel = vel;
         this.acc = acc;
         this.size = size;
+        // Changing these will rotate the frames :P
         alpha = 0;
         omega = 0;
     }
@@ -34,10 +35,8 @@ public class Rectangle {
     }
 
     public void move() {
-        pos.setX(pos.getX() + vel.getX());
-        pos.setY(pos.getY() + vel.getY());
-        vel.setX(vel.getX() + acc.getX());
-        vel.setY(vel.getY() + acc.getY());
+        pos = pos.plus(vel);
+        vel = vel.plus(acc);
 
         alpha += omega; 
         if(alpha > 0) alpha = alpha - 180; 
@@ -58,7 +57,7 @@ public class Rectangle {
     }
 
     public void drawMe(Color color) {
-        GL11.glPushMatrix();
+//        GL11.glPushMatrix();
         GL11.glColor3f(1f, 0f, 0f);
         GL11.glBegin(GL11.GL_QUADS); {
             glVertex2d(pNW.getX(), pNW.getY());
@@ -66,7 +65,7 @@ public class Rectangle {
             glVertex2d(pSE.getX(), pSE.getY());
             glVertex2d(pSW.getX(), pSW.getY());
         } GL11.glEnd();
-        GL11.glPopMatrix();
+//        GL11.glPopMatrix();
         
     }
 
@@ -96,14 +95,17 @@ public class Rectangle {
                     }
                     //Now we know between which two points (myEdges[edgeLoc, edgeLoc+1]) the Rectangle r should be moved towards.
                 }
-                if(j == -1) throw new RuntimeException("The edge is not correct or something");
+                if(j == -1) throw new RuntimeException("The edge is not correct or something (error in code)");
                 Vector a,b,c;
-                a = myEdges[j];
-                b = myEdges[j+1];
-                c = edge;
+                a = myEdges[j].clone();
+                b = myEdges[j+1].clone();
+                c = edge.clone();
                 
-                System.out.println("in ");
                 c = a.minus(b).unitVector().times(a.minus(c).length() / b.minus(c).length());
+//                double factor;
+//                factor = a.minus(c).length() / b.minus(c).length();
+//                c = (a.times(factor).plus(b.times(factor))).times(1/2);
+                
                 return c;
 //                return myEdges[j].plus(myEdges[j].minus(myEdges[j+1]).
 //                        unitVector().times((myEdges[j].minus(edge).
@@ -118,8 +120,7 @@ public class Rectangle {
     }
     
     /**
-     * Returns the point that is inside the rectangle (this) or null
-     * should be called areYouInsideMe
+     * Returns the point that is inside the rectangle (this) or null, should be called areYouInsideMe
      * @return
      */
     private boolean inBounds(Vector v) {
