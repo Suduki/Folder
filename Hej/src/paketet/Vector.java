@@ -71,12 +71,13 @@ public class Vector {
     }
     /**
      * uses the cross product: ||(this) x v|| 
+     * Note that we are in 2d.
      */
     public double area(Vector v) {
         return Math.abs(this.x*v.getY() - this.y*v.getX());
     }
     public double length() {
-        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+        return Math.sqrt(x*x + y*y);
     }
     public Vector clone() {
         return new Vector(x, y);

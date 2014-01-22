@@ -38,17 +38,26 @@ public class Main {
 		glMatrixMode(GL_MODELVIEW);
 		
 		//Rectangle r = new Rectangle(new Vector(20, 20));
-		double ay = 0.00001, ax = 0.000001;
+		double ay = -0.001, ax = 0.00;
 		double sizeFactor = 3;
-		RectangleMaster rectangleMaster  = new RectangleMaster(new Vector(250, 250), new Vector(0, 0), new Vector(ax,ay), new Vector(5*sizeFactor, 2*sizeFactor));
-		rectangleMaster.addRectangle(new Vector(80, 80), new Vector(0, 0), new Vector(ax, -ay), new Vector(15*sizeFactor, 2*sizeFactor), 10, 2);
-		rectangleMaster.addRectangle(new Vector(50, 408), new Vector(0, 0), new Vector(-ax, -ay), new Vector(2*sizeFactor, 2*sizeFactor), 0, 5);
-		rectangleMaster.addRectangle(new Vector(353, 250), new Vector(0, 0), new Vector(ax, -ay), new Vector(2*sizeFactor, 2*sizeFactor), 20, 5);
-		rectangleMaster.addRectangle(new Vector(83, 80), new Vector(0, 0), new Vector(ax, -ay), new Vector(2*sizeFactor, 2*sizeFactor), 10, 2);
-		rectangleMaster.addRectangle(new Vector(56, 408), new Vector(0, 0), new Vector(-ax, -ay), new Vector(2*sizeFactor, 2*sizeFactor), 0, 5);
-		rectangleMaster.addRectangle(new Vector(356, 250), new Vector(0, 0), new Vector(ax, -ay), new Vector(40*sizeFactor, 2*sizeFactor), 20, 5);
-//		rectangleMaster.run();
-		Thread a = (new Thread(rectangleMaster));
+//		RectangleMaster rectangleMaster  = new RectangleMaster(new Vector(250, 250), new Vector(0, 0), new Vector(ax,ay), new Vector(5*sizeFactor, 2*sizeFactor));
+//		rectangleMaster.addRectangle(new Vector(80, 80), new Vector(0, 0), new Vector(ax, -ay), new Vector(15*sizeFactor, 2*sizeFactor), 10, 2);
+//		Thread a = (new Thread(rectangleMaster));
+//		a.start();
+		CircleMaster circleMaster  = new CircleMaster();
+		circleMaster.addCircle(new Vector(80, 80), new Vector(0, 0), new Vector(ax, -ay), 10d, 0d);
+		circleMaster.addCircle(new Vector(80, 120), new Vector(0, 0), new Vector(ax, -ay), 10d, 0.01d);
+		circleMaster.addCircle(new Vector(79, 180), new Vector(0, 0), new Vector(ax, -ay), 10d, 0.01d);
+		circleMaster.addCircle(new Vector(80, 160), new Vector(0, 0), new Vector(ax, -ay), 10d, 0d);
+		circleMaster.addCircle(new Vector(80, 200), new Vector(0, 0), new Vector(ax, -ay), 10d, 0.01d);
+		circleMaster.addCircle(new Vector(79, 220), new Vector(1, 0), new Vector(ax, -ay), 20d, 0.01d);
+		circleMaster.addCircle(new Vector(100, 80), new Vector(0, 0), new Vector(ax, -ay), 10d, 0d);
+		circleMaster.addCircle(new Vector(120, 120), new Vector(0, 0), new Vector(ax, -ay), 10d, 0.01d);
+		circleMaster.addCircle(new Vector(149, 180), new Vector(0, 0), new Vector(ax, -ay), 10d, 0.01d);
+		circleMaster.addCircle(new Vector(160, 160), new Vector(0, 0), new Vector(ax, -ay), 10d, 0d);
+		circleMaster.addCircle(new Vector(180, 200), new Vector(0, 0), new Vector(ax, -ay), 10d, 0.01d);
+		circleMaster.addCircle(new Vector(209, 220), new Vector(1, 0), new Vector(ax, -ay), 20d, 0.01d);
+		Thread a = (new Thread(circleMaster));
 		a.start();
 //        
 		
@@ -64,13 +73,15 @@ public class Main {
 			mouseCoords.setY(screenSizeY - Mouse.getY() - 1);
 
 			
-			rectangleMaster.draw();
+			circleMaster.draw();
 //			rectangleList.iterate();
+//			circleList.iterate();
 			
 			Display.update();
 			Display.sync(60);
 		}
-		rectangleMaster.stop();
+//		rectangleMaster.stop();
+		circleMaster.stop();
 		while(a.isAlive()) { //Wait for thread to die
             try {
                 Thread.sleep(100);

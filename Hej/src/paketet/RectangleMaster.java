@@ -95,8 +95,9 @@ public class RectangleMaster implements Runnable {
 				        r1.alpha = r1.alpha - r1.omega;
 //				        r2.pos = r2.pos.minus(r2.vel);
 				        r2.alpha = r2.alpha - r2.omega;
+				        Vector temp = r1.vel.clone();
 				        r1.vel = r2.vel.times(new Vector(1,1));
-				        r2.vel = r1.vel.times(new Vector(1,1));
+				        r2.vel = temp.times(new Vector(1,1));
 				        r1.omega +=1;
 				        r2.omega -=1;
 				    }

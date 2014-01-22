@@ -139,6 +139,8 @@ public class Rectangle {
         return false;
     }
     
+
+    
     public double area() {
         return size.getX() * size.getY();
     }
