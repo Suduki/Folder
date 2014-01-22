@@ -105,6 +105,7 @@ public class CircleMaster implements Runnable {
                 if (Math.abs(c1.vel.getY())<0.01){ //Stop the circle from moving
                     c1.pos.setY(Main.screenSizeY - c1.getRad()*1.01);
                     c1.vel.setY(0);
+                    c1.acc.setY(0);
                 } else {
                     c1.pos.setY(Main.screenSizeY - c1.getRad());
                     c1.vel.setY(-c1.vel.getY()*damping);
