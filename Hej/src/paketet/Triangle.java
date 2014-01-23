@@ -15,11 +15,11 @@ public class Triangle {
     }
     
     public Triangle rotate(double alphar) {
-        return new Triangle(vA.rotate(alphar), vB.rotate(alphar), vC.rotate(alphar));
+        return new Triangle(vA.rotate2d(alphar), vB.rotate2d(alphar), vC.rotate2d(alphar));
     }
     
     public double area() {
-        return vB.minus(vA).area(vC.minus(vA))/2;
+        return vB.minus(vA).area2d(vC.minus(vA))/2;
     }
     
 

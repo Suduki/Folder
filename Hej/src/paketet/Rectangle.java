@@ -44,10 +44,10 @@ public class Rectangle {
         
         // Update NW, NE, SE, SW
         double alphar = alpha*2*Math.PI/360;
-        pNW = Vector.rotate(alphar, -size.getX()/2, -size.getY()/2);
-        pNE = Vector.rotate(alphar, size.getX()/2, -size.getY()/2);
-        pSE = Vector.rotate(alphar, size.getX()/2, size.getY()/2);
-        pSW = Vector.rotate(alphar, -size.getX()/2, size.getY()/2);
+        pNW = new Vector(-size.getX()/2, -size.getY()/2).rotate2d(alphar);
+        pNE = new Vector(size.getX()/2, -size.getY()/2).rotate2d(alphar);
+        pSE = new Vector(size.getX()/2, size.getY()/2).rotate2d(alphar);
+        pSW = new Vector(-size.getX()/2, size.getY()/2).rotate2d(alphar);
         pNW = pNW.plus(pos);
         pNE = pNE.plus(pos); 
         pSE = pSE.plus(pos);

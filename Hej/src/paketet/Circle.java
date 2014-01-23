@@ -11,11 +11,13 @@ import org.newdawn.slick.Color;
 public class Circle {
 
     public Vector pos, vel, acc;
+    public double mass;
     private double rad;
 
 
-    public double omegar, alphar; //omegar is in radians
-    public boolean acceleratingInY, acceleratingInX; 
+    //TODO Fix omegar into 3d?
+    public double omegar, alphar; //omegar is in radians 
+    
     private Color color;
 
     public Circle(Vector pos, Vector vel, Vector acc, double rad) {
@@ -23,15 +25,15 @@ public class Circle {
         this.vel = vel;
         this.acc = acc;
         this.rad = rad;
-        acceleratingInX = true;
-        acceleratingInY = true;
+        this.mass = 1;
     }
-    public Circle(Vector pos, Vector vel, Vector acc, double rad, double omegar) {
+    public Circle(Vector pos, Vector vel, Vector acc, double rad, double omegar, double mass) {
         this.pos = pos;
         this.vel = vel;
         this.acc = acc;
         this.rad = rad;
         this.omegar = omegar;
+        this.mass = mass;
         
     }
 
@@ -63,9 +65,9 @@ public class Circle {
         
         
         //Draw a cross in the middle of the circle to demonstrate rotation.
-        Vector crossV = new Vector(0,rad/2).rotate(alphar);
+        Vector crossV = new Vector(0,rad/2).rotate2d(alphar);
         drawLine(pos.plus(crossV), pos.minus(crossV));
-        crossV = crossV.rotate(Math.PI/2);
+        crossV = crossV.rotate2d(Math.PI/2);
         drawLine(pos.plus(crossV), pos.minus(crossV));
         
     }
