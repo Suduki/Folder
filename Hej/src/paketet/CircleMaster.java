@@ -82,7 +82,7 @@ public class CircleMaster implements Runnable {
                                 inertia2 = c2.mass*c2.getRad()*c2.getRad();
                         
                         
-                      //TODO This guy does not care about mass
+                        //TODO This guy does not care about mass
                         Vector tempPos = c1.pos.clone();
                         c1.pos = c2.pos.mean(c1.pos).plus((c1.pos.minus(c2.pos).unitVector().times(c1.getRad()+c2.getRad())).times(c2.mass/(c1.mass+c2.mass))); 
                         c2.pos = tempPos.mean(c2.pos).plus((c2.pos.minus(c1.pos).unitVector().times(c2.getRad()+c1.getRad())).times(c1.mass/(c1.mass+c2.mass))); 
