@@ -1,5 +1,7 @@
 package paketet;
 
+import org.lwjgl.opengl.GL11;
+
 public class Vector {
     private double x, y, z;
     public static final Vector ORIGO = new Vector(0,0);
@@ -76,8 +78,7 @@ public class Vector {
     }
     
     /**
-     * uses the cross product: ||(this) x v|| 
-     * Note that we are in 2d.
+     * uses the cross product: ||(this) x v|| (only uses x and y)
      */
     public double area2d(Vector v) {
         return Math.abs(this.x*v.getY() - this.y*v.getX());
@@ -90,18 +91,18 @@ public class Vector {
         return new Vector(xr, yr, zr);
     }
     public double length() {
-        return Math.sqrt(x*x + y*y);
+        return Math.sqrt(x*x + y*y + z*z);
     }
     public Vector clone() {
-        return new Vector(x, y);
+        return new Vector(x, y, z);
     }
     public Vector mean(Vector v) {
-        return new Vector((this.x + v.x)/2, (this.y + v.y)/2);
+        return new Vector((this.x + v.x)/2, (this.y + v.y)/2, (this.z + v.z)/2);
     }
     public Vector unitVector() {
         return new Vector(x/this.length(), y/this.length());
     }
     public double dot(Vector v) {
-        return this.x * v.getX() + this.y * v.getY();
+        return this.x * v.getX() + this.y * v.getY() + this.z * v.getZ();
     }
 }

@@ -10,7 +10,7 @@ import org.newdawn.slick.Color;
 
 public class Circle {
 
-    public Vector pos, vel, acc;
+    public Vector pos, vel, acc, gravityAcc;
     public double mass;
     private double rad;
 
@@ -24,6 +24,7 @@ public class Circle {
         this.pos = pos;
         this.vel = vel;
         this.acc = acc;
+        this.gravityAcc = acc.clone();
         this.rad = rad;
         this.mass = 1;
     }
@@ -31,6 +32,7 @@ public class Circle {
         this.pos = pos;
         this.vel = vel;
         this.acc = acc;
+        this.gravityAcc = acc.clone();
         this.rad = rad;
         this.omegar = omegar;
         this.mass = mass;
@@ -49,7 +51,7 @@ public class Circle {
         int numberOfSlices = 30;
         
         GL11.glPushMatrix();
-        GL11.glColor3d(1f, 0f, 0f);
+        GL11.glColor3d(1f, Math.abs((float)omegar*10), Math.abs((float)omegar*100));
         GL11.glTranslated(pos.getX(), pos.getY(), 0);
         GL11.glScaled(rad, rad, 1);
 

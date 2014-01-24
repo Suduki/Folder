@@ -13,6 +13,7 @@ public class Main {
 
 	public static Vector mouseCoords;
 	public static int screenSizeX = 1200, screenSizeY = 800;
+	public static final double GRAVITATIONAL_ACCELERATION = 0.001;
 	
 	
 	public static void main(String[] args) {
@@ -38,15 +39,15 @@ public class Main {
 		glMatrixMode(GL_MODELVIEW);
 		
 		//Rectangle r = new Rectangle(new Vector(20, 20));
-		double ay = -0.001, ax = 0.00;
-		double sizeFactor = 5;
+		double ay = -GRAVITATIONAL_ACCELERATION, ax = 0.0;
+		double sizeFactor = 6;
 //		RectangleMaster rectangleMaster  = new RectangleMaster(new Vector(250, 250), new Vector(0, 0), new Vector(ax,ay), new Vector(5*sizeFactor, 2*sizeFactor));
 //		rectangleMaster.addRectangle(new Vector(80, 80), new Vector(0, 0), new Vector(ax, -ay), new Vector(15*sizeFactor, 2*sizeFactor), 10, 2);
 //		Thread a = (new Thread(rectangleMaster));
 //		a.start();
 		CircleMaster circleMaster  = new CircleMaster();
 		circleMaster.addCircle(new Vector(80, 80), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0d, 1);
-		circleMaster.addCircle(new Vector(80, 120), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
+		circleMaster.addCircle(new Vector(80, 120), new Vector(0, -1), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
 		circleMaster.addCircle(new Vector(79, 180), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
 		circleMaster.addCircle(new Vector(80, 160), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0d, 1);
 		circleMaster.addCircle(new Vector(80, 200), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
@@ -56,24 +57,24 @@ public class Main {
 		circleMaster.addCircle(new Vector(149, 180), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
 		circleMaster.addCircle(new Vector(160, 160), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0d, 1);
 		circleMaster.addCircle(new Vector(180, 200), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
-		circleMaster.addCircle(new Vector(209, 220), new Vector(1, 0), new Vector(ax, -ay), 2*sizeFactor, 0.01d, 1);
+		circleMaster.addCircle(new Vector(209, 220), new Vector(1, 0), new Vector(ax, -ay), 7*sizeFactor, 0.01d, 150);
 		circleMaster.addCircle(new Vector(300, 80), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0d, 1);
 		circleMaster.addCircle(new Vector(380, 120), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
 		circleMaster.addCircle(new Vector(379, 180), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
 		circleMaster.addCircle(new Vector(380, 160), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0d, 1);
 		circleMaster.addCircle(new Vector(380, 200), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
-		circleMaster.addCircle(new Vector(379, 500-50), new Vector(1, 0), new Vector(ax, -ay), 2*sizeFactor, 0.01d, 50);
+		circleMaster.addCircle(new Vector(379, 500-50), new Vector(1, 0), new Vector(ax, -ay), 2*sizeFactor, 1d, 50);
 		circleMaster.addCircle(new Vector(400, 80), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0d, 1);
 		circleMaster.addCircle(new Vector(420, 120), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
 		circleMaster.addCircle(new Vector(449, 180), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
 		circleMaster.addCircle(new Vector(460, 160), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0d, 1);
 		circleMaster.addCircle(new Vector(480, 200), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
 		circleMaster.addCircle(new Vector(9, 220), new Vector(1, 0), new Vector(ax, -ay), 2*sizeFactor, 0.01d, 1);
-		for (int i = 0; i < 50; i++){
-		    for (int j=0; j<5; j++) {
-		    circleMaster.addCircle(new Vector(600 + j*3*sizeFactor, 20 + i*3*sizeFactor), new Vector(1, 0), new Vector(ax, -ay), sizeFactor, 0.0, 1);
-		    }
-		}
+//		for (int i = 0; i < 50; i++){
+//		    for (int j=0; j<5; j++) {
+//		    circleMaster.addCircle(new Vector(600 + j*3*sizeFactor, 20 + i*3*sizeFactor), new Vector(1, 0), new Vector(ax, -ay), sizeFactor, 0.0, 1);
+//		    }
+//		}
 		Thread a = (new Thread(circleMaster));
 		a.start();
 //        
