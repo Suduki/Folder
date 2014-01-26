@@ -59,8 +59,8 @@ public class CircleMaster implements Runnable {
 
     public void iterate() {
 
-        double elasticity = 0.9;
-        double rotRatio = 0.90; //How much of the rotation of the circles is transferred on the collision event (0<rR<1)
+        double elasticity = 0.95;
+        double rotRatio = 0.1; //How much of the rotation of the circles is transferred on the collision event (0<rR<1)
 
         for (Circle c1: CircleList) {
             for (Circle c2: CircleList) {
@@ -77,90 +77,83 @@ public class CircleMaster implements Runnable {
                         // c2.pos = c2.pos.minus(c2.vel);
                         // c2.vel = c2.vel.minus(c2.acc);
                         // c2.alphar = c2.alphar - c2.omegar;
-                        
+
                         Vector normalVector = c1.pos.minus(c2.pos).unitVector();
 
-                        double inertia1 = c1.mass*c1.getRad()*c1.getRad(), 
-                                inertia2 = c2.mass*c2.getRad()*c2.getRad();
-                        
-                        
-                        //TODO This guy does not care about mass
-                        Vector tempPos = c1.pos.clone(),
-                                collPos = c1.pos.plus(normalVector.times(c1.getRad()));
-                        
+                        double inertia1 = c1.inertia, 
+                                inertia2 = c2.inertia;
+
                         c1.pos = c1.pos.plus(v.times(c1.getRad()/(c1.getRad()+c2.getRad())));
                         c2.pos = c2.pos.minus(v.times(c2.getRad()/(c1.getRad()+c2.getRad())));
-                        
-//                        c1.pos = collPos.plus(
-//                                normalVector.times((c1.getRad()+c2.getRad())*(c2.mass/(c1.mass+c2.mass))));
-//                        c2.pos = collPos.minus(
-//                                normalVector.times((c1.getRad()+c2.getRad())*(c1.mass/(c1.mass+c2.mass))));
-                        
-                                
-//                        c1.pos = c1.pos.mean(c2.pos).plus( (c1.pos.minus(c2.pos).unitVector().times(c1.getRad()+c2.getRad()))
-//                                        .times(c1.mass/(c1.mass+c2.mass)));
-//                        c2.pos = tempPos.mean(c2.pos).plus((c2.pos.minus(c1.pos).unitVector().times(c2.getRad()+c1.getRad()))
-//                                        .times(c2.mass/(c1.mass+c2.mass))); 
-                        
+
+                        //                        c1.pos = collPos.plus(
+                        //                                normalVector.times((c1.getRad()+c2.getRad())*(c2.mass/(c1.mass+c2.mass))));
+                        //                        c2.pos = collPos.minus(
+                        //                                normalVector.times((c1.getRad()+c2.getRad())*(c1.mass/(c1.mass+c2.mass))));
+
+
+                        //                        c1.pos = c1.pos.mean(c2.pos).plus( (c1.pos.minus(c2.pos).unitVector().times(c1.getRad()+c2.getRad()))
+                        //                                        .times(c1.mass/(c1.mass+c2.mass)));
+                        //                        c2.pos = tempPos.mean(c2.pos).plus((c2.pos.minus(c1.pos).unitVector().times(c2.getRad()+c1.getRad()))
+                        //                                        .times(c2.mass/(c1.mass+c2.mass))); 
+
                         Vector vp = c1.vel.plus(new Vector(0,0,c1.omegar).cross(normalVector.times(c1.getRad()))).
                                 minus(c2.vel.plus(new Vector(0,0,c2.omegar).cross(normalVector.times(-c2.getRad())))); 
                         System.out.println(vp.length());
 
                         double I = -(1+elasticity)/
-                                        ((1/c1.mass)+(1/c2.mass) + 
-                                            (normalVector.times(c1.getRad()).area2d(normalVector)) *
-                                                (normalVector.times(c1.getRad()).area2d(normalVector))/inertia1 + 
-                                            (normalVector.times(-c2.getRad()).area2d(normalVector)) * 
-                                                (normalVector.times(-c2.getRad()).area2d(normalVector))/inertia2);
-                        
-                        c1.vel = c1.vel.plus(vp.times(I/c1.mass)).times(rotRatio); 
-                        c2.vel = c2.vel.minus(vp.times(I/c2.mass)).times(rotRatio); 
-                        
+                                ((1/c1.mass)+(1/c2.mass) + 
+                                        (normalVector.times(c1.getRad()).area2d(normalVector)) *
+                                        (normalVector.times(c1.getRad()).area2d(normalVector))/inertia1 + 
+                                        (normalVector.times(-c2.getRad()).area2d(normalVector)) * 
+                                        (normalVector.times(-c2.getRad()).area2d(normalVector))/inertia2);
+
+                        c1.vel = c1.vel.plus(vp.times(I/c1.mass)); 
+                        c2.vel = c2.vel.minus(vp.times(I/c2.mass)); 
+
                         double temp = c1.omegar;
-                        c1.omegar = c1.omegar*(1-rotRatio)-c2.omegar*(c1.mass/(c1.mass+c2.mass))*rotRatio;
-                        c2.omegar = c2.omegar*(1-rotRatio)-temp*(c2.mass/(c1.mass+c2.mass))*rotRatio;
-                        
-                        
-                        
-//                        c1.vel = c1.vel.times(c1.mass/(c1.mass+c2.mass)).
-//                                    plus(v.unitVector().times(c2.vel).times(c2.mass/(c1.mass+c2.mass)));
-//                        c2.vel = c2.vel.times(c2.mass/(c1.mass+c2.mass)).
-//                                plus(v.unitVector().times(c1.vel).times(-c1.mass/(c1.mass+c2.mass)));
+                        c1.omegar = c1.omegar*(c1.mass/(c1.mass+c2.mass))-c2.omegar*(c2.mass/(c1.mass+c2.mass));
+                        c2.omegar = c2.omegar*(c2.mass/(c1.mass+c2.mass))-temp*(c1.mass/(c1.mass+c2.mass));
+
+
+
+                        //                        c1.vel = c1.vel.times(c1.mass/(c1.mass+c2.mass)).
+                        //                                    plus(v.unitVector().times(c2.vel).times(c2.mass/(c1.mass+c2.mass)));
+                        //                        c2.vel = c2.vel.times(c2.mass/(c1.mass+c2.mass)).
+                        //                                plus(v.unitVector().times(c1.vel).times(-c1.mass/(c1.mass+c2.mass)));
 
                         //TODO Change omega and make new vel depend on omega
-                        
+
                         // Reset the acceleration of both the bodies
                         c1.acc = c1.gravityAcc.clone();
                         c2.acc = c2.gravityAcc.clone();
-                        
-                        
+
+
                     }
                 }
             }
         }
-        
+
         // TODO Give oldCircleList to new or w/e 
         // Within Frame/Map edges/Edges?
         //TODO Change omega and make new vel depend on omega
         for (Circle c1: CircleList) {
-            
+
+
             if (c1.pos.getY()<c1.getRad()) { //North
                 Vector normalVector = new Vector(0,-1,0);
                 Vector vp = c1.vel.plus(new Vector(0,0,c1.omegar).cross(normalVector.times(c1.getRad())));
-                if (Math.abs(c1.vel.getY())<0.01){ //Stop the circle from moving
-                    c1.pos.setY(c1.getRad()*1.001);
-                    c1.vel.setY(0);
-                    c1.acc.setY(0);
-                    
-                } else {
-                    c1.pos.setY(c1.getRad());
-                    c1.vel.setY(-c1.vel.getY()*elasticity);
-                }
+
+                c1.pos.setY(c1.getRad());
+                c1.vel = vp.times(elasticity);
+                c1.vel.setY(-c1.vel.getY()*elasticity);
             }
             if (c1.pos.getX() > Main.screenSizeX - c1.getRad()) { //East
                 Vector normalVector = new Vector(1,0,0);
                 Vector vp = c1.vel.plus(new Vector(0,0,c1.omegar).cross(normalVector.times(c1.getRad())));
+
                 c1.pos.setX(Main.screenSizeX - c1.getRad());
+                c1.vel = vp.times(elasticity);
                 c1.vel.setX(-c1.vel.getX()*elasticity);
             }
             if (c1.pos.getY() > Main.screenSizeY - c1.getRad()) { //South
@@ -169,9 +162,10 @@ public class CircleMaster implements Runnable {
                 if (Math.abs(c1.vel.getY())<0.01){ //Stop the circle from moving
                     c1.pos.setY(Main.screenSizeY - c1.getRad()*1.01);
                     c1.vel.setY(0);
-                    c1.acc.setY(-c1.acc.getY());
+                    c1.acc.setY(0);
                 } else {
                     c1.pos.setY(Main.screenSizeY - c1.getRad());
+                    c1.vel = vp.times(elasticity);
                     c1.vel.setY(-c1.vel.getY()*elasticity);
                 }
             }
@@ -179,14 +173,15 @@ public class CircleMaster implements Runnable {
                 Vector normalVector = new Vector(-1,0,0);
                 Vector vp = c1.vel.plus(new Vector(0,0,c1.omegar).cross(normalVector.times(c1.getRad())));
                 c1.pos.setX(c1.getRad());
+                c1.vel = vp.times(elasticity);
                 c1.vel.setX(-c1.vel.getX()*elasticity);
             }
 
         }
     }
-    
 
-    
+
+
     public void move() {
         for (Circle c : CircleList) {
             c.move();

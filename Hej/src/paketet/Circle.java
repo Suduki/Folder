@@ -11,7 +11,7 @@ import org.newdawn.slick.Color;
 public class Circle {
 
     public Vector pos, vel, acc, gravityAcc;
-    public double mass;
+    public double mass, inertia;
     private double rad;
 
 
@@ -27,6 +27,7 @@ public class Circle {
         this.gravityAcc = acc.clone();
         this.rad = rad;
         this.mass = 1;
+        this.inertia = mass*rad*rad;
     }
     public Circle(Vector pos, Vector vel, Vector acc, double rad, double omegar, double mass) {
         this.pos = pos;
@@ -36,6 +37,7 @@ public class Circle {
         this.rad = rad;
         this.omegar = omegar;
         this.mass = mass;
+        this.inertia = mass*rad*rad;
         
     }
 

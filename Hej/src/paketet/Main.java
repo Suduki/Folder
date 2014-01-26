@@ -40,7 +40,7 @@ public class Main {
 		
 		//Rectangle r = new Rectangle(new Vector(20, 20));
 		double ay = -GRAVITATIONAL_ACCELERATION, ax = 0.0;
-		double sizeFactor = 6;
+		double sizeFactor = 5;
 //		RectangleMaster rectangleMaster  = new RectangleMaster(new Vector(250, 250), new Vector(0, 0), new Vector(ax,ay), new Vector(5*sizeFactor, 2*sizeFactor));
 //		rectangleMaster.addRectangle(new Vector(80, 80), new Vector(0, 0), new Vector(ax, -ay), new Vector(15*sizeFactor, 2*sizeFactor), 10, 2);
 //		Thread a = (new Thread(rectangleMaster));
@@ -70,11 +70,11 @@ public class Main {
 		circleMaster.addCircle(new Vector(460, 160), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0d, 1);
 		circleMaster.addCircle(new Vector(480, 200), new Vector(0, 0), new Vector(ax, -ay), sizeFactor, 0.01d, 1);
 		circleMaster.addCircle(new Vector(9, 220), new Vector(1, 0), new Vector(ax, -ay), 2*sizeFactor, 0.01d, 1);
-//		for (int i = 0; i < 50; i++){
-//		    for (int j=0; j<5; j++) {
-//		    circleMaster.addCircle(new Vector(600 + j*3*sizeFactor, 20 + i*3*sizeFactor), new Vector(1, 0), new Vector(ax, -ay), sizeFactor, 0.0, 1);
-//		    }
-//		}
+		for (int i = 0; i < 10; i++){
+		    for (int j=0; j<5; j++) {
+		    circleMaster.addCircle(new Vector(600 + j*3*sizeFactor, 20 + i*3*sizeFactor), new Vector(0, 1), new Vector(ax, -ay), sizeFactor, 0.0, 1);
+		    }
+		}
 		Thread a = (new Thread(circleMaster));
 		a.start();
 //        
